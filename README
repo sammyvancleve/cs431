@@ -1,0 +1,50 @@
+RESULTS FROM SIMULATIONS
+by Sammy Van Cleve
+
+(N = number of devices)
+
+Binary Backoff
+--------------
+N=10 -- 44 timeslots
+N=20 -- 196 timeslots
+N=40 -- 281 timeslots
+N=80 -- 342 timeslots
+
+As is clear in these results, the more devices that are attempting to send
+frames, the longer it will take when accounting for exponential binary
+backoff.  However, the increase does not seem to be just linear.
+
+This is likely because when a large enough range of delays is selected
+(such as 0-255), a smaller difference in the number of devices
+will not necessarily increase the amount of time. Even with more devices, 
+it will still be choosing within a large range, and it is possible that 
+a group of smaller devices will have one device delaying much longer.
+Here, a larger group of devices could all send their frames earlier without
+any more collisions, given the large possible range.
+
+Hubs vs Switches
+----------------
+resuts over 1000 simulated timeslots, averaged from 5 runs
+
+% of frames delivered: Hub
+N=10 -- 0.1243% delivered
+N=20 -- 0% delivered
+N=40 -- 0% delivered
+
+% of frames delivered: Switch
+N=10 -- 19.24% delivered
+N=20 -- 18.83% delivered
+N=40 -- 18.78% delivered
+
+Because a single collision occurs on a hub when any two devices are sending
+frames, frames are only sent successfuly when the number of devices is very
+low (all the devices are in the same collision domain, higher number of
+devices means a larger collision domain).
+
+In comparison, only devices sending to another device or its destination
+are in its collision domain when using a switch.  When the number of 
+devices increases, the range of possible random sources and destinations 
+do too -- so while there are more frames being sent by more devices, the 
+likelihood of each device sending to a device in its collision domain stays
+(relatively) low.
+(collision domains stay small even as number of devices increases)
